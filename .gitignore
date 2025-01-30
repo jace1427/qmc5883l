@@ -1,0 +1,5 @@
+build
+compile_commands.json
+cmake.sh
+.cache
+pico_sdk_import.cmake
