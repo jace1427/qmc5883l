@@ -5,6 +5,38 @@
 #include <pico/stdio.h>
 #include <stdint.h>
 
+// The qmc struct
+typedef struct {
+  uint8_t ODR, RNG, OSR;
+  float magnetic_declination;
+
+  struct {
+    int16_t x, y, z;
+  } data;
+
+  struct {
+    int status;
+    int16_t x, y, z;
+  } calibrated;
+
+  struct {
+    float x, y, z;
+  } offsets;
+
+  struct {
+    float x, y, z;
+  } scales;
+
+} QMC5883L;
+
+// Functions
+int qmc5883l_get_azimuth(QMC5883L *qmc);
+int qmc5883l_read_data(QMC5883L *qmc);
+void qmc5883l_calibrate(QMC5883L *qmc);
+int qmc5883l_init(QMC5883L *qmc, const int odr, const int rng, const int osr,
+                  const int degrees, const uint8_t minutes);
+
+// The QMC5883L registers and settings
 // default address is OD: 0001101
 #define ADDRESS 0x0D
 #define CHIP_ID 0xFF
@@ -46,34 +78,3 @@
 // REG_CONTROL_2 settings
 #define SOFT_RST 0b10000000
 #define INT_ENB 0b00000001
-
-#define QMC5883L_ERROR 1
-
-typedef struct {
-  uint8_t ODR, RNG, OSR;
-  float magnetic_declination;
-
-  struct {
-    int16_t x, y, z;
-  } data;
-
-  struct {
-    int status;
-    int16_t x, y, z;
-  } calibrated;
-
-  struct {
-    float x, y, z;
-  } offsets;
-
-  struct {
-    float x, y, z;
-  } scales;
-
-} QMC5883L;
-
-int qmc5883l_get_azimuth(QMC5883L *qmc);
-int qmc5883l_read_data(QMC5883L *qmc);
-void qmc5883l_calibrate(QMC5883L *qmc);
-int qmc5883l_init(QMC5883L *qmc, const int odr, const int rng, const int osr,
-                  const int degrees, const uint8_t minutes);
