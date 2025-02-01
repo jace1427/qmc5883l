@@ -9,13 +9,14 @@
 typedef struct {
   uint8_t ODR, RNG, OSR;
   float magnetic_declination;
+  bool verbose;
 
   struct {
     int16_t x, y, z;
   } data;
 
   struct {
-    int status;
+    bool is_calibrated;
     int16_t x, y, z;
   } calibrated;
 
@@ -33,8 +34,11 @@ typedef struct {
 int qmc5883l_get_azimuth(QMC5883L *qmc);
 int qmc5883l_read_data(QMC5883L *qmc);
 void qmc5883l_calibrate(QMC5883L *qmc);
+void qmc5883l_set_calibration(QMC5883L *qmc, int16_t x_max, int16_t x_min,
+                              int16_t y_max, int16_t y_min, int16_t z_max,
+                              int16_t z_min);
 int qmc5883l_init(QMC5883L *qmc, const int odr, const int rng, const int osr,
-                  const int degrees, const uint8_t minutes);
+                  const int degrees, const uint8_t minutes, const int verbose);
 
 // The QMC5883L registers and settings
 // default address is OD: 0001101
