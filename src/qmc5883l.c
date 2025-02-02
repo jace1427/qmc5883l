@@ -67,7 +67,10 @@ int qmc5883l_get_azimuth(QMC5883L *qmc) {
 
   double heading = (atan2(y, x) * 180.0) / M_PI;
   heading += qmc->magnetic_declination;
-  return (int)heading % 360;
+  if (heading <= 0) {
+    heading += 360;
+  }
+  return (int)heading;
 }
 
 /*! Calculated new x, y, and z values using offsets and scales.

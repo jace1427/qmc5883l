@@ -10,7 +10,7 @@
 int main(void) {
   QMC5883L qmc;
   sleep_ms(10000);
-  int ret = qmc5883l_init(&qmc, 10, 2, 512, 15, 5, 1);
+  int ret = qmc5883l_init(&qmc, 10, 8, 512, 15, 5, 1);
   if (ret == PICO_OK) {
     printf("\ninit succeeded!!!\n");
   } else {
