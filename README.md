@@ -1,8 +1,13 @@
 # QMC5883L
 
 A library for the QMC5883L, written with the pico-sdk.
+Supports:
 
-## Features
+- Reading the x, y, and z values from the compass
+- Calibration of the compass
+- Calculating the azimuth (heading)
+
+## API
 
 `qmc5883l_read_data`:
 
